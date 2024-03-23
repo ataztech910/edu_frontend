@@ -12,7 +12,7 @@ export default function BackButton() {
     border duration-200 ease-in-out 
     border-gray-600 transition">
             <div className="flex leading-5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-left w-5 h-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-left w-5 h-5">
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
                 Back</div>
