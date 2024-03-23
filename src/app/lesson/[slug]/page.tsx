@@ -1,4 +1,5 @@
 import BackButton from "@/app/components/BackButton";
+import Link from "next/link";
 
 async function getData(slug: string) {
   console.log(`${process.env.API_GATEWAY}/lessons/${slug}?populate=*`);
@@ -21,6 +22,16 @@ export default async function Lesson({
           {data.attributes.Title}
         </h1>
         <div dangerouslySetInnerHTML={{ __html: data.attributes.Text }} />
+        <h2 className="mt-4">Trainigs:</h2>
+        <ul>
+        {
+          data.attributes.chats && data.attributes.chats.data.map((item: any) => (
+            <li key={item.id}>
+              <Link href={`/trainig/${item.id}`}>{item.attributes.Title}</Link>
+            </li>
+          ))
+        }
+        </ul>
     </main>
   );
 }

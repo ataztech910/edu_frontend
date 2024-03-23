@@ -10,3 +10,7 @@ iframe {
   position: relative;
   height: 300px;
 }
+
+a:hover {
+  text-decoration: underline;
+}
