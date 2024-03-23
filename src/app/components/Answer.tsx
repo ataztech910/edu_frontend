@@ -1,21 +1,33 @@
 'use client';
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppDataContext } from "../lesson/[slug]/data-provider";
 
 export default function Answer(props: any) {
-  const [answer, setAnswer] = useState({} as any);  
+  const [answer, setAnswer] = useState({} as any);
+  const { state, actions } = useContext(AppDataContext);
 
   const showResult = (isCorrect: boolean, answer: string) => {
     setAnswer({
         isCorrect,
         answered: answer
     });
+    if(isCorrect) {
+        if (state.appData.currentBubble < state.appData.limit) {
+            const newState = state.appData.currentBubble + 1;
+            actions.setAppData({...state.appData, ...{currentBubble: newState}});
+            console.log('state.appData.currentBubble in Answer', {...state.appData, ...{currentBubble: newState}});
+            setTimeout(() => {
+                console.log('state.appData.currentBubble in Answer', state.appData.currentBubble);
+            }, 500);
+        }
+    }
   }  
 
   return (
     <div>
-        { props.answers && props.answers.map((item: any) => (
-            <div key={item.id} className="mb-8">
+        { !answer.isCorrect && props.answers && props.answers.map((item: any) => (
+            <div key={`answer${item.id}`} className="mb-8">
                 <div className="flex">
                     <div>
                         {item.Answer}

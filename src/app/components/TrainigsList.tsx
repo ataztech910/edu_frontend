@@ -1,17 +1,22 @@
 
 'use client';
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { TypeAnimation } from 'react-type-animation';
-import Answer from "./Answer";
+import { useContext, useEffect, useState } from "react";
+import TrainigBubble from "./TrainigBubble";
+import { AppDataContext } from "../lesson/[slug]/data-provider";
+// import Image from "next/image";
+// import { TypeAnimation } from 'react-type-animation';
+// import Answer from "./Answer";
 
 export default function TrainigsList(props: any) {
+    const { state, actions } = useContext(AppDataContext);
     const [currentTrainig, setCurrentTraining] = useState(0);
     const [startTraining, setStartTraining] = useState(false);
-    const [trainigData, setTrainigData] = useState({} as any);
-
+    const [trainigData, setTrainigData] = useState([] as any);
+    const [allTrainings, _] = useState(props);
+   
     const start = () => {
-        setCurrentTraining(props[0].id);
+        setStartTraining(true);
+        actions.setAppData({currentBubble: 0, limit: Object.keys(props).length});
     }
 
     useEffect(() => {
@@ -25,9 +30,12 @@ export default function TrainigsList(props: any) {
                 throw new Error(`HTTP error: Status ${response.status}`);
               }
               let trainigDataResponse = await response.json();
-              setTrainigData(trainigDataResponse);
-              setStartTraining(true);
-              console.log(trainigDataResponse);
+              setTrainigData(
+                (state: any) => [
+                    ...state,
+                    trainigDataResponse
+                ]);
+              
             } catch (err) {
              console.error(err);
             } 
@@ -35,6 +43,13 @@ export default function TrainigsList(props: any) {
         currentTrainig >0 && fetchDataForTrainigs();
 
     } ,[currentTrainig]);
+
+    useEffect(() => {
+        console.log('called', allTrainings);
+        console.log('called', allTrainings[state.appData.currentBubble]);
+        setCurrentTraining(allTrainings[state.appData.currentBubble]?.id);
+    } , [state.appData.currentBubble])
+
 
     if(!startTraining) {
     return <button className="my-6 text-base  focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
@@ -45,32 +60,10 @@ export default function TrainigsList(props: any) {
                 border-gray-600 transition" onClick={() => start()}>Start trainig</button>
     }  
     return (
-    <div className="rounded overflow-hidden shadow-lg p-8">
-        <div className="chat-message">
-         <div className="flex items-end">
-            <div className="flex flex-col space-y-2  mx-2 order-2 items-start">
-                <div>
-                    <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
-                        <TypeAnimation
-                            splitter={(str) => str.split(/(?= )/)} 
-                            sequence={[trainigData.data.attributes.Question]}
-                            speed={{ type: 'keyStrokeDelayInMs', value: 100 }}
-                            repeat={0}
-                         />
-                    </span>
-                </div>
-            </div>
-            <Image 
-                src={`${process.env.NEXT_PUBLIC_IMAGE_API}${trainigData.data.attributes.Avatar.data.attributes.url}`} 
-                alt={trainigData.data.attributes.Title}
-                width={200}
-                height={200}
-                className="w-10 h-10 rounded-full order-1" />
-         </div>
-         <div className="mt-6">
-            <Answer answers={trainigData.data.attributes.Answer} />
-         </div>
-      </div>
-    </div>
+    <>
+        { trainigData.length > 0 && trainigData.map((item: any) => 
+            <TrainigBubble  key={`listItem${item.id}`} {...item} />
+        ) }
+    </>
     );
 }
