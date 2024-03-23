@@ -3,9 +3,9 @@ import CoursesList from "./components/CoursesList";
 
 export default function Home() {
   return (
-    <main className="">
-        <h1>Courses list</h1>
+    <div className="container mx-auto mb-24 text-center">
+        <h1 className="mt-8 block antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] text-blue-gray-900">Courses list</h1>
         <CoursesList  />
-    </main>
+    </div>
   );
 }

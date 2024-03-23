@@ -13,15 +13,15 @@ export default async function CoursesList() {
     const { data } = await getData();
     console.log(data);
     return (
-        <div>
-            <ul>
+        <div className="mt-10">
+            <div className="container mx-auto grid grid-cols-1 gap-x-10 gap-y-24 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-14">
             { data && data.map((item: any) => (
-                <li key={item.id}>
+                <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md border" key={item.id}>
                     <CourseItem {...item} />
-                </li>
+                </div>
             )) 
             }
-            </ul>
+            </div>
         </div>
     );
 }
