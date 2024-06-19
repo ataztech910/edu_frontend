@@ -1,5 +1,4 @@
 'use client';
-
 import { useContext, useState } from "react";
 import { AppDataContext } from "../lesson/[slug]/data-provider";
 

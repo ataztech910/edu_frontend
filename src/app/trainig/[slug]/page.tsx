@@ -1,10 +1,8 @@
 import BackButton from "@/app/components/BackButton";
-import Link from "next/link";
 import Image from "next/image";
 import Answer from "@/app/components/Answer";
 
 async function getData(slug: string) {
-  console.log(`${process.env.API_GATEWAY}/chats/${slug}?populate=*`);
   const res = await fetch(`${process.env.API_GATEWAY}/chats/${slug}?populate=*`)
   if (!res.ok) {
     throw new Error('Failed to fetch data')

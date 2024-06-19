@@ -11,17 +11,22 @@ async function getData() {
 
 export default async function CoursesList() {
     const { data } = await getData();
-    console.log(data);
     return (
+      <>
+        <h1
+          className="mt-8 block antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] text-blue-gray-900">
+          Courses list
+        </h1>
         <div className="mt-10">
-            <div className="container mx-auto grid grid-cols-1 gap-x-10 gap-y-24 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-14">
-            { data && data.map((item: any) => (
-                <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md border" key={item.id}>
-                    <CourseItem {...item} />
-                </div>
-            )) 
-            }
-            </div>
+          <div className="container mx-auto grid grid-cols-1 gap-x-10 gap-y-24 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-14">
+              { data && data.map((item: any) => (
+                  <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md border" key={item.id}>
+                      <CourseItem {...item} />
+                  </div>
+              ))
+              }
+          </div>
         </div>
+      </>
     );
 }

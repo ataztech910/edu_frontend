@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
-export default function Auth() {
+export default function AuthForm() {
   const [userData, setUserData] = useState({
     username: '',
     email: '',

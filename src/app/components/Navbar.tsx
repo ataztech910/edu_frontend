@@ -14,7 +14,7 @@ export function Navbar() {
                     <li>Blog</li>
                 </ul>
                 <div className="hidden items-center gap-4 lg:flex">
-                    <button>Login</button>
+                    <Link href={'/auth'}>Login</Link>
                 </div>
             </div>
         </nav>
